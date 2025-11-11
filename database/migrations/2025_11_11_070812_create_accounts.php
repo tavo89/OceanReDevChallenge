@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
-            $table->string('account_code')->unique();
-            $table->string('name');
+            $table->string('account_code', 20)->unique();
+            $table->string('name', 50);
             $table->enum('type', ['cash', 'receivable', 'income']);
             $table->boolean('is_postable')->default(true);
             $table->boolean('active')->default(true);

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->string('code', 3)->unique(); // USD, EUR
-            $table->string('name'); // US Dollar, Euro
-            $table->string('symbol', 10); // $, €
+            $table->string('name', 15); // US Dollar, Euro
+            $table->string('symbol', 2); // $, €
             $table->decimal('exchange_rate', 10, 6)->default(1.000000); // Tasa de cambio vs moneda base
             $table->boolean('is_base')->default(false); // Moneda base del sistema
             $table->boolean('active')->default(true);

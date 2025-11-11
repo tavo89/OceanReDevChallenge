@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-            $table->string('receipt_number')->unique();
+            $table->string('receipt_number', 30)->unique();
             $table->date('payment_date');
             $table->decimal('amount', 15, 2);
             $table->string('currency', 3)->default('USD');

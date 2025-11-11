@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('accounting_periods', function (Blueprint $table) {
             $table->id();
-            $table->string('period_code')->unique(); // e.g. 2025-07
+            $table->string('period_code', 10)->unique(); // e.g. 2025-07
             $table->enum('status', ['open', 'validating', 'locking', 'closed'])->default('open');
             $table->timestamp('locked_at')->nullable();
             $table->timestamps();

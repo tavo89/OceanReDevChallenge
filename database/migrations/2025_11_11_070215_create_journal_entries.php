@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('journal_entries', function (Blueprint $table) {
             $table->id();
-            $table->string('entry_number')->unique();
+            $table->string('entry_number',30)->unique();
             $table->date('posting_date');
             $table->text('description')->nullable();
             $table->string('source_reference')->nullable()->comment('e.g., invoice:INV-1001, receipt:RCPT-0001');

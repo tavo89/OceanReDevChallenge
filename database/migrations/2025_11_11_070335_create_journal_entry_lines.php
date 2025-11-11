@@ -20,9 +20,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('journal_entry_id')->references('id')->on('journal_entries')->onDelete('cascade');
-
-            // Constraint to ensure debit and credit are mutually exclusive
-            $table->check('(debit > 0 AND credit = 0) OR (credit > 0 AND debit = 0)');
+            
+            // Note: Validation that debit and credit are mutually exclusive will be handled in the model
         });
     }
 
