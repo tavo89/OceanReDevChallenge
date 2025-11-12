@@ -10,7 +10,7 @@ class AccountingPeriodSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     */
+     */ 
     public function run(): void
     {
         DB::table('accounting_periods')->insert([

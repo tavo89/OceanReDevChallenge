@@ -10,7 +10,7 @@ class ReceiptSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     */
+     */ 
     public function run(): void
     {
         $period2025_11 = DB::table('accounting_periods')->where('period_code', '2025-11')->first();

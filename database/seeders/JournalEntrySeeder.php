@@ -10,7 +10,7 @@ class JournalEntrySeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     */
+     */ 
     public function run(): void
     {
         // Get accounts for journal entry lines
