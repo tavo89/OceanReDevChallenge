@@ -4,9 +4,11 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Domain\Accounting\Contracts\PeriodClosingServiceInterface;
+use App\Domain\Accounting\Contracts\PeriodReopeningServiceInterface;
 use App\Domain\Accounting\Contracts\AccountingPeriodRepositoryInterface;
 use App\Domain\Accounting\Contracts\BalanceCalculatorInterface;
 use App\Domain\Accounting\Services\PeriodClosingService;
+use App\Domain\Accounting\Services\PeriodReopeningService;
 use App\Domain\Accounting\Repositories\AccountingPeriodRepository;
 use App\Domain\Accounting\Services\BalanceCalculatorService;
 
@@ -21,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             PeriodClosingServiceInterface::class,
             PeriodClosingService::class
+        );
+
+        $this->app->bind(
+            PeriodReopeningServiceInterface::class,
+            PeriodReopeningService::class
         );
 
         $this->app->bind(

@@ -43,4 +43,18 @@ class AccountingPeriodRepository implements AccountingPeriodRepositoryInterface
             'locked_at' => now()
         ]);
     }
+
+    /**
+     * Reopen a closed period
+     *
+     * @param AccountingPeriod $period
+     * @return bool
+     */
+    public function reopenPeriod(AccountingPeriod $period): bool
+    {
+        return $period->update([
+            'status' => 'open',
+            'locked_at' => null
+        ]);
+    }
 }

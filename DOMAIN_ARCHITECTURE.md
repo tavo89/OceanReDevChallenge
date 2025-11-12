@@ -19,11 +19,13 @@ The Accounting domain handles all financial accounting operations including peri
 
 #### Contracts (Interfaces)
 - **PeriodClosingServiceInterface** - Defines period closing operations
+- **PeriodReopeningServiceInterface** - Defines period reopening operations
 - **BalanceCalculatorInterface** - Defines balance calculation operations
 - **AccountingPeriodRepositoryInterface** - Defines data access for periods
 
 #### Services
 - **PeriodClosingService** - Implements period closing business logic
+- **PeriodReopeningService** - Implements period reopening business logic
 - **BalanceCalculatorService** - Calculates account balances for periods
 
 #### Repositories
@@ -31,6 +33,7 @@ The Accounting domain handles all financial accounting operations including peri
 
 #### Commands
 - **ClosePeriodCommand** - CLI command for closing accounting periods
+- **ReopenPeriodCommand** - CLI command for reopening closed accounting periods
 
 ### Sales Domain
 **Location:** `app/Domain/Sales/`
@@ -134,11 +137,22 @@ All tests are updated to reference the new domain namespaces.
 
 ## Test Results
 
-All 12 tests pass after domain separation:
+All 21 tests pass with period closing and reopening functionality:
 ```
-Tests:    12 passed (18 assertions)
-Duration: 26.60s
+Tests:    21 passed (31 assertions)
+Duration: 1.54s
 ```
+
+### Test Coverage
+- **Unit Tests (11 tests)**:
+  - PeriodClosingServiceTest (6 tests)
+  - PeriodReopeningServiceTest (5 tests)
+  - ExampleTest (1 test)
+
+- **Feature Tests (9 tests)**:
+  - ClosePeriodCommandTest (4 tests)
+  - ReopenPeriodCommandTest (4 tests)
+  - ExampleTest (1 test)
 
 ## Future Considerations
 
@@ -165,6 +179,26 @@ Identify and enforce aggregate boundaries:
 php artisan accounting:close 2025-11
 ```
 
+This command:
+- Validates that the period exists and is open
+- Calculates all account balances for the period
+- Verifies debits equal credits (balanced)
+- Updates period status to 'closed' and sets locked_at timestamp
+- Displays balance summary table
+
+### Reopen Accounting Period
+```bash
+php artisan accounting:reopen 2025-11
+```
+
+This command:
+- Validates that the period exists and is closed
+- Prompts for confirmation before reopening
+- Updates period status to 'open' and clears locked_at timestamp
+- Allows modifications to previously closed transactions
+
+**Warning:** Reopening a closed period should be done carefully as it allows modifications to finalized transactions.
+
 ### Run Tests
 ```bash
 php artisan test
@@ -173,6 +207,7 @@ php artisan test
 ### Run Specific Domain Tests
 ```bash
 php artisan test --filter=PeriodClosing
+php artisan test --filter=PeriodReopening
 ```
 
 ## Additional Resources

@@ -30,4 +30,12 @@ interface AccountingPeriodRepositoryInterface
      * @return bool
      */
     public function lockPeriod(AccountingPeriod $period): bool;
+
+    /**
+     * Reopen a closed period
+     *
+     * @param AccountingPeriod $period
+     * @return bool
+     */
+    public function reopenPeriod(AccountingPeriod $period): bool;
 }
