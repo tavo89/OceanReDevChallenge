@@ -26,7 +26,8 @@ class CurrencySeeder extends Seeder
                 'code' => 'EUR',
                 'name' => 'Euro',
                 'symbol' => '€',
-                'exchange_rate' => 0.850000, // Ejemplo: 1 USD = 0.85 EUR
+                'exchange_rate' => 0.850000, // Example: 1 USD = 0.85 EUR
+                'is_base' => false,
                 'active' => true,
             ],
         ]);
