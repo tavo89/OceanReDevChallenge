@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\Accounting\Repositories;
 
-use App\Contracts\AccountingPeriodRepositoryInterface;
-use App\Models\AccountingPeriod;
+use App\Domain\Accounting\Contracts\AccountingPeriodRepositoryInterface;
+use App\Domain\Accounting\Models\AccountingPeriod;
 
 class AccountingPeriodRepository implements AccountingPeriodRepositoryInterface
 {

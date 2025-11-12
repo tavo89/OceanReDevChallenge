@@ -3,10 +3,10 @@
 namespace Tests\Unit\Services;
 
 use Tests\TestCase;
-use App\Services\PeriodClosingService;
-use App\Contracts\AccountingPeriodRepositoryInterface;
-use App\Contracts\BalanceCalculatorInterface;
-use App\Models\AccountingPeriod;
+use App\Domain\Accounting\Services\PeriodClosingService;
+use App\Domain\Accounting\Contracts\AccountingPeriodRepositoryInterface;
+use App\Domain\Accounting\Contracts\BalanceCalculatorInterface;
+use App\Domain\Accounting\Models\AccountingPeriod;
 use Illuminate\Support\Collection;
 use Mockery;
 

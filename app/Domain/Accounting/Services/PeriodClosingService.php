@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Domain\Accounting\Services;
 
-use App\Contracts\PeriodClosingServiceInterface;
-use App\Contracts\AccountingPeriodRepositoryInterface;
-use App\Contracts\BalanceCalculatorInterface;
-use App\Models\AccountingPeriod;
+use App\Domain\Accounting\Contracts\PeriodClosingServiceInterface;
+use App\Domain\Accounting\Contracts\AccountingPeriodRepositoryInterface;
+use App\Domain\Accounting\Contracts\BalanceCalculatorInterface;
+use App\Domain\Accounting\Models\AccountingPeriod;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 

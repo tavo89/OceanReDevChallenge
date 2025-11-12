@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Domain\Accounting\Contracts;
 
-use App\Models\AccountingPeriod;
+use App\Domain\Accounting\Models\AccountingPeriod;
 
 interface AccountingPeriodRepositoryInterface
 {

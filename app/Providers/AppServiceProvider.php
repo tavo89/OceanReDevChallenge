@@ -3,12 +3,12 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Contracts\PeriodClosingServiceInterface;
-use App\Contracts\AccountingPeriodRepositoryInterface;
-use App\Contracts\BalanceCalculatorInterface;
-use App\Services\PeriodClosingService;
-use App\Repositories\AccountingPeriodRepository;
-use App\Services\BalanceCalculatorService;
+use App\Domain\Accounting\Contracts\PeriodClosingServiceInterface;
+use App\Domain\Accounting\Contracts\AccountingPeriodRepositoryInterface;
+use App\Domain\Accounting\Contracts\BalanceCalculatorInterface;
+use App\Domain\Accounting\Services\PeriodClosingService;
+use App\Domain\Accounting\Repositories\AccountingPeriodRepository;
+use App\Domain\Accounting\Services\BalanceCalculatorService;
 
 class AppServiceProvider extends ServiceProvider
 {

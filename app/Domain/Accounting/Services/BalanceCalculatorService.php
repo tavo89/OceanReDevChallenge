@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Domain\Accounting\Services;
 
-use App\Contracts\BalanceCalculatorInterface;
+use App\Domain\Accounting\Contracts\BalanceCalculatorInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 

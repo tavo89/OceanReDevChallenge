@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Domain\Accounting\Contracts;
 
 use Illuminate\Support\Collection;
 

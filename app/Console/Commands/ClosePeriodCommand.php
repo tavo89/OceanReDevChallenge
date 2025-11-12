@@ -2,7 +2,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Contracts\PeriodClosingServiceInterface;
+use App\Domain\Accounting\Contracts\PeriodClosingServiceInterface;
 
 class ClosePeriodCommand extends Command
 {

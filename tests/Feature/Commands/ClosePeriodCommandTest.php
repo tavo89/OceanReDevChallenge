@@ -3,8 +3,8 @@
 namespace Tests\Feature\Commands;
 
 use Tests\TestCase;
-use App\Models\AccountingPeriod;
-use App\Contracts\PeriodClosingServiceInterface;
+use App\Domain\Accounting\Models\AccountingPeriod;
+use App\Domain\Accounting\Contracts\PeriodClosingServiceInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
 
