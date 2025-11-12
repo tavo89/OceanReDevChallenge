@@ -15,13 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed currencies first
+        // Seed in correct order to maintain foreign key relationships
         $this->call([
             CurrencySeeder::class,
+            AccountingPeriodSeeder::class,
+            AccountSeeder::class,
+            CustomerSeeder::class,
+            InvoiceSeeder::class,
+            ReceiptSeeder::class,
+            JournalEntrySeeder::class, // Must be after invoices and receipts
         ]);
 
-        // User::factory(10)->create();
-
+        // Create test user
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
