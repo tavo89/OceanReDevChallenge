@@ -15,7 +15,6 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed architecture documentation.
 ```bash
 # Install dependencies
 composer install
-npm install
 
 # Configure environment
 cp .env.example .env
@@ -33,9 +32,6 @@ php artisan db:seed
 
 # Install Laravel Sanctum (API authentication)
 php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-
-# Build assets
-npm run build
 
 # Start server
 php artisan serve
