@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Sales;
 
 use App\Http\Controllers\Controller;
 use App\Domain\Sales\Contracts\InvoiceServiceInterface;
+use App\Domain\Sales\Contracts\InvoiceCancellationServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class InvoiceController extends Controller
 {
     public function __construct(
-        private InvoiceServiceInterface $invoiceService
+        private InvoiceServiceInterface $invoiceService,
+        private InvoiceCancellationServiceInterface $cancellationService
     ) {}
 
     /**
@@ -41,6 +43,39 @@ class InvoiceController extends Controller
                 'message' => $result['message'],
                 'data' => $result['data']
             ], 201);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => $result['message'],
+            'data' => null
+        ], 422);
+    }
+
+    /**
+     * Cancel an invoice
+     *
+     * @param int $id
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function cancel(int $id, Request $request): JsonResponse
+    {
+        $validated = $request->validate([
+            'credit_note_number' => 'required|string|max:191|unique:credit_notes,credit_note_number',
+            'period_id' => 'required|integer|exists:accounting_periods,id',
+            'issue_date' => 'nullable|date',
+            'reason' => 'nullable|string|max:1000',
+        ]);
+
+        $result = $this->cancellationService->cancelInvoice($id, $validated);
+
+        if ($result['success']) {
+            return response()->json([
+                'success' => true,
+                'message' => $result['message'],
+                'data' => $result['data']
+            ], 200);
         }
 
         return response()->json([

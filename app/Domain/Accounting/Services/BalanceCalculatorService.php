@@ -21,14 +21,15 @@ class BalanceCalculatorService implements BalanceCalculatorInterface
             ->join('journal_entries', 'journal_entry_lines.journal_entry_id', '=', 'journal_entries.id')
             ->join('accounts', 'journal_entry_lines.account_id', '=', 'accounts.id')
             ->where(function ($query) use ($periodId) {
-                // Join with invoices for this period
+                // Join with invoices for this period (only valid invoices)
                 $query->whereExists(function ($subQuery) use ($periodId) {
                     $subQuery->select(DB::raw(1))
                         ->from('invoices')
                         ->whereRaw(DB::getDriverName() === 'sqlite' 
                             ? "journal_entries.source_reference = 'invoice:' || invoices.invoice_number"
                             : "journal_entries.source_reference = CONCAT('invoice:', invoices.invoice_number)")
-                        ->where('invoices.period_id', '=', $periodId);
+                        ->where('invoices.period_id', '=', $periodId)
+                        ->where('invoices.status', '=', 'valid');
                 })
                 // OR join with receipts for this period
                 ->orWhereExists(function ($subQuery) use ($periodId) {

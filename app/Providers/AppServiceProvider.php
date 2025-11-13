@@ -15,10 +15,14 @@ use App\Domain\Sales\Contracts\InvoiceServiceInterface;
 use App\Domain\Sales\Contracts\ReceiptServiceInterface;
 use App\Domain\Sales\Contracts\InvoiceRepositoryInterface;
 use App\Domain\Sales\Contracts\ReceiptRepositoryInterface;
+use App\Domain\Sales\Contracts\CreditNoteRepositoryInterface;
+use App\Domain\Sales\Contracts\InvoiceCancellationServiceInterface;
 use App\Domain\Sales\Services\InvoiceService;
 use App\Domain\Sales\Services\ReceiptService;
+use App\Domain\Sales\Services\InvoiceCancellationService;
 use App\Domain\Sales\Repositories\InvoiceRepository;
 use App\Domain\Sales\Repositories\ReceiptRepository;
+use App\Domain\Sales\Repositories\CreditNoteRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -67,6 +71,16 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ReceiptRepositoryInterface::class,
             ReceiptRepository::class
+        );
+
+        $this->app->bind(
+            CreditNoteRepositoryInterface::class,
+            CreditNoteRepository::class
+        );
+
+        $this->app->bind(
+            InvoiceCancellationServiceInterface::class,
+            InvoiceCancellationService::class
         );
     }
 

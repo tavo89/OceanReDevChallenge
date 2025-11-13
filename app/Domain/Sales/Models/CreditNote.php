@@ -5,43 +5,34 @@ namespace App\Domain\Sales\Models;
 use App\Domain\Accounting\Models\AccountingPeriod;
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class CreditNote extends Model
 {
     protected $fillable = [
-        'invoice_number',
+        'credit_note_number',
+        'invoice_id',
         'issue_date',
-        'due_date',
-        'customer_id',
-        'total_amount',
+        'amount',
         'currency',
         'period_id',
         'exchange_rate',
         'base_currency_amount',
-        'status',
-        'cancelled_at',
+        'reason',
     ];
 
     protected $casts = [
         'issue_date' => 'date',
-        'due_date' => 'date',
-        'total_amount' => 'decimal:2',
+        'amount' => 'decimal:2',
         'exchange_rate' => 'decimal:6',
         'base_currency_amount' => 'decimal:2',
-        'cancelled_at' => 'datetime',
     ];
 
-    public function customer()
+    public function invoice()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Invoice::class);
     }
 
     public function accountingPeriod()
     {
         return $this->belongsTo(AccountingPeriod::class, 'period_id');
-    }
-
-    public function creditNote()
-    {
-        return $this->hasOne(CreditNote::class);
     }
 }

@@ -13,6 +13,7 @@ Route::get('/user', function (Request $request) {
 // Sales Domain Routes
 Route::prefix('sales')->group(function () {
     Route::post('/invoices', [InvoiceController::class, 'store']);
+    Route::post('/invoices/{id}/cancel', [InvoiceController::class, 'cancel']);
     Route::post('/receipts', [ReceiptController::class, 'store']);
 });
 
