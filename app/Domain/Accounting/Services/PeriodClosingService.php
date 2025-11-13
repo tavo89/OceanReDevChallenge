@@ -6,6 +6,7 @@ use App\Domain\Accounting\Contracts\PeriodClosingServiceInterface;
 use App\Domain\Accounting\Contracts\AccountingPeriodRepositoryInterface;
 use App\Domain\Accounting\Contracts\BalanceCalculatorInterface;
 use App\Domain\Accounting\Models\AccountingPeriod;
+use App\Domain\Accounting\Models\AccountingPeriodBalance;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -69,6 +70,10 @@ class PeriodClosingService implements PeriodClosingServiceInterface
                     );
                 }
 
+                // Save balances to database
+                $this->saveBalances($period->id, $balances);
+                Log::info("Period {$periodCode} balances saved to database");
+
                 // Lock the period
                 $this->periodRepository->lockPeriod($period);
                 Log::info("Period {$periodCode} closed successfully");
@@ -106,5 +111,33 @@ class PeriodClosingService implements PeriodClosingServiceInterface
         // Add business rules for closing
         // For example: period must be open or validating
         return in_array($period->status, ['open', 'validating']);
+    }
+
+    /**
+     * Save balances to the accounting_period_balances table
+     *
+     * @param int $periodId
+     * @param \Illuminate\Support\Collection $balances Collection of stdClass objects with balance data
+     * @return void
+     */
+    private function saveBalances(int $periodId, $balances): void
+    {
+        // Soft delete existing balances for this period (preserves audit history)
+        AccountingPeriodBalance::where('accounting_period_id', $periodId)->delete();
+
+        // Insert new balance records
+        foreach ($balances as $balance) {
+            /** @var \stdClass $balance */
+            AccountingPeriodBalance::create([
+                'accounting_period_id' => $periodId,
+                'account_id' => $balance->account_id,
+                'account_code' => $balance->account_code,
+                'account_name' => $balance->account_name,
+                'account_type' => $balance->account_type,
+                'total_debit' => $balance->total_debit,
+                'total_credit' => $balance->total_credit,
+                'balance' => $balance->total_debit - $balance->total_credit,
+            ]);
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Domain\Accounting\Services;
 use App\Domain\Accounting\Contracts\PeriodReopeningServiceInterface;
 use App\Domain\Accounting\Contracts\AccountingPeriodRepositoryInterface;
 use App\Domain\Accounting\Models\AccountingPeriod;
+use App\Domain\Accounting\Models\AccountingPeriodBalance;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -46,6 +47,11 @@ class PeriodReopeningService implements PeriodReopeningServiceInterface
 
             // Reopen the period within a transaction
             DB::transaction(function () use ($period) {
+                // Delete saved balances for this period
+                $deletedCount = AccountingPeriodBalance::where('accounting_period_id', $period->id)->delete();
+                Log::info("Deleted {$deletedCount} balance records for period {$period->period_code}");
+                
+                // Reopen the period
                 $this->periodRepository->reopenPeriod($period);
             });
 

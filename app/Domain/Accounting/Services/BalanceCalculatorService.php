@@ -25,18 +25,23 @@ class BalanceCalculatorService implements BalanceCalculatorInterface
                 $query->whereExists(function ($subQuery) use ($periodId) {
                     $subQuery->select(DB::raw(1))
                         ->from('invoices')
-                        ->whereRaw("journal_entries.source_reference = CONCAT('invoice:', invoices.invoice_number)")
+                        ->whereRaw(DB::getDriverName() === 'sqlite' 
+                            ? "journal_entries.source_reference = 'invoice:' || invoices.invoice_number"
+                            : "journal_entries.source_reference = CONCAT('invoice:', invoices.invoice_number)")
                         ->where('invoices.period_id', '=', $periodId);
                 })
                 // OR join with receipts for this period
                 ->orWhereExists(function ($subQuery) use ($periodId) {
                     $subQuery->select(DB::raw(1))
                         ->from('receipts')
-                        ->whereRaw("journal_entries.source_reference = CONCAT('receipt:', receipts.receipt_number)")
+                        ->whereRaw(DB::getDriverName() === 'sqlite'
+                            ? "journal_entries.source_reference = 'receipt:' || receipts.receipt_number"
+                            : "journal_entries.source_reference = CONCAT('receipt:', receipts.receipt_number)")
                         ->where('receipts.period_id', '=', $periodId);
                 });
             })
             ->select(
+                'accounts.id as account_id',
                 'accounts.account_code',
                 'accounts.name as account_name',
                 'accounts.type as account_type',
@@ -44,7 +49,7 @@ class BalanceCalculatorService implements BalanceCalculatorInterface
                 DB::raw('SUM(journal_entry_lines.credit) as total_credit'),
                 DB::raw('SUM(journal_entry_lines.debit - journal_entry_lines.credit) as balance')
             )
-            ->groupBy('accounts.account_code', 'accounts.name', 'accounts.type')
+            ->groupBy('accounts.id', 'accounts.account_code', 'accounts.name', 'accounts.type')
             ->orderBy('accounts.account_code')
             ->get();
 

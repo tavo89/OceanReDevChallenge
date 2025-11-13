@@ -7,6 +7,14 @@ use App\Domain\Accounting\Models\AccountingPeriod;
 interface AccountingPeriodRepositoryInterface
 {
     /**
+     * Find period by ID
+     *
+     * @param int $id
+     * @return AccountingPeriod|null
+     */
+    public function find(int $id): ?AccountingPeriod;
+
+    /**
      * Find period by code
      *
      * @param string $code

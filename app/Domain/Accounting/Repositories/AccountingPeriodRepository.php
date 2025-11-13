@@ -8,6 +8,17 @@ use App\Domain\Accounting\Models\AccountingPeriod;
 class AccountingPeriodRepository implements AccountingPeriodRepositoryInterface
 {
     /**
+     * Find period by ID
+     *
+     * @param int $id
+     * @return AccountingPeriod|null
+     */
+    public function find(int $id): ?AccountingPeriod
+    {
+        return AccountingPeriod::find($id);
+    }
+
+    /**
      * Find period by code
      *
      * @param string $code
