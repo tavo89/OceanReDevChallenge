@@ -18,7 +18,7 @@ class AccountingPeriodBalanceController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $query = AccountingPeriodBalance::with(['accountingPeriod:id,period_code,status', 'account:id,account_code,account_name']);
+        $query = AccountingPeriodBalance::with(['accountingPeriod:id,period_code,status', 'account:id,account_code,name']);
 
         // Filter by period_id if provided
         if ($request->has('period_id')) {
